@@ -8,6 +8,8 @@
 
 #include "MathUtils.h"
 #include "Player.h"
+#include "Timer.h"
+
 // Forward declaring our renderer and window.
 // Because we're using them as pointers, we don't need to know their size
 // at compile time to define this class.
@@ -30,22 +32,15 @@ public:
 protected:
 	GameEngine();
 
+	virtual void InitializeImpl() = 0;
+	virtual void UpdateImpl(float dt) = 0;
+	virtual void DrawImpl(SDL_Renderer *renderer, float dt) = 0;
+
 	static GameEngine *_instance;
 
-	SDL_Window *window;
-	SDL_Renderer *renderer;
-	Player player; 
-	// Using the default member-wise initializer for our new struct.
-	Vector2 pos;
-	Vector2 vel;
-	Vector2 directionVector;
-	Vector2 endPointOffSet;
-	
-	float oldTime, currentTime, deltaTime;
-	const float pi = 3.1415926535f;
-	float speed;
-	float acceleration;
-	float rotationRadians;
-	float rotationDegrees;
-	float rotationSpeed;
+	SDL_Window *_window;
+	SDL_Renderer *_renderer;
+	Timer _engineTimer;
+
+	float _oldTime, _currentTime, _deltaTime;
 };

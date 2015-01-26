@@ -1,58 +1,28 @@
 #include "Player.h"
-#include "MathUtils.h"
-#include <math.h>
 #include <SDL.h>
-#include <iostream>
 
-GameObject::GameObject()
+Player::Player() : GameObject()
 {
-
+	_transform.position = { 320.0f, 320.0f, 0.0f };
 }
 
-GameObject::~GameObject()
+Player::~Player()
 {
-
 }
 
 void Player::Initialize()
 {
-	// Using the default member-wise initializer for our new struct.
-	speed = 10.0f;
-	vel = { 0.0f, 0.0f };
-    pos = { 320.0f, 320.0f }; // player spawn at centre;
-	endPointOffSet = { 10.0f, 0.0f };
-	rotationDegrees = rotationDegrees = 10.0f;
-	rotationRadians = MathUtils::ToRadians(rotationDegrees);
-	directionVector = { cos(rotationRadians), sin(rotationRadians) };
-	acceleration = 200.0f;
 }
 
-void Player::Update(float deltaTime)
+void Player::Update(float dt)
 {
-	// Draw the point.
-	//SDL_RenderDrawPoint(renderer, posX, posY);
-
-	static float rotationDegrees = 10.0f;
-	//rotationDegrees += (rotationSpeed * deltaTime);
-	//rotationDegrees += (rotationDegrees >= 360.0f ? -360.0f : 0);
-
-	rotationRadians = MathUtils::ToRadians(rotationDegrees);
-
-	Vector2 rotatedOffset =
-	{
-		endPointOffSet.x * cosf(rotationRadians) + endPointOffSet.y * sinf(rotationRadians),
-		endPointOffSet.x * sinf(rotationRadians) - endPointOffSet.y * cosf(rotationRadians)
-	};
-
-	transformedEndPoint = { pos.x + rotatedOffset.x, pos.y + rotatedOffset.y };
-
-
 }
 
-void Player::Draw(SDL_Renderer *renderer, float deltaTime)
+void Player::Draw(SDL_Renderer *renderer, float dt)
 {
-	printf("%f", pos.x);
-	SDL_RenderDrawLine(renderer, pos.x, pos.y, transformedEndPoint.x, transformedEndPoint.y);
+	SDL_RenderDrawLine(renderer,
+		_transform.position.x,
+		_transform.position.y,
+		_transform.position.x + 10,
+		_transform.position.y + 10);
 }
-
-
